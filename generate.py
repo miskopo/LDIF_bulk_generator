@@ -61,7 +61,11 @@ class LDIFGenerator:
         name = names.get_full_name()
         uid = (''.join(name.split(' ')).lower())
         person['dn'] = f"uid={uid},ou=people,{self.base}"
-        person['objectClass'] = ["inetOrgPerson", "posixAccount"]
+        person['objectClass'] = ["inetOrgPerson",
+                                 "posixAccount",
+                                 "krbticketpolicyaux",
+                                 "krbprincipalaux",
+                                 "krbprincipal"]
         person['uid'] = uid
         person['cn'] = name
         person['uidNumber'] = random.randrange(911400001,
@@ -71,6 +75,10 @@ class LDIFGenerator:
         person['homeDirectory'] = f"/home/{uid}"
         person['userPassword'] = "".join(random.sample(
             string.ascii_letters, 8))
+        realm = ".".join(self.base.split('=')).upper().replace(
+            "DC.", "").replace(",", ".")
+        person['krbPrincipalName'] = f"{uid}@{realm}"
+        person['krbCanonicalName'] = f"{uid}@{realm}"
         person['displayName'] = name
         person['givenName'] = name.split(' ')[0]
         person['sn'] = name.split(' ')[1]
