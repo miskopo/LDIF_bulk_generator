@@ -1,5 +1,5 @@
-# LDIF_bulk_generator
-Generate large amount of user in LDIF format for FreeIPA consumption
+# LDIF bulk user and group generator for FreeIPA insertion
+Generate large amount of users and/or groups in LDIF format for FreeIPA consumption
 
 ## Requirements
 `python3.6+`
